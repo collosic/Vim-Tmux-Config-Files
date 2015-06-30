@@ -50,7 +50,7 @@ set encoding=utf-8
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 " Set color scheme!¬
-colorscheme Tomorrow-Night-Eighties
+colorscheme Tomorrow-Night
 
 set clipboard=unnamed
 " Enhance command-line completion
