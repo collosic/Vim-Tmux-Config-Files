@@ -20,7 +20,8 @@ Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'itchyny/lightline.vim'
 Plugin 'edkolev/tmuxline.vim'
-" Plugin 'bling/vim-airline'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'chriskempson/base16-vim'
 
 " Plugin for snippets
 Plugin 'SirVer/ultisnips'
@@ -36,21 +37,23 @@ filetype plugin indent on    " required
 "filetype plugin on
 "
 " Brief help
-" :PluginList       - lists configured plugins
+" :PluginList       - lists configured plugin
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" :PluginClean      - confirms remval of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-" Utf-8 encoding
-set encoding=utf-8
 " Make Vim more useful
 set nocompatible
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 " Set color scheme!¬
 colorscheme Tomorrow-Night
+set background=dark
+
+" No wordwrap
+set nowrap
 
 set clipboard=unnamed
 " Enhance command-line completion
@@ -122,6 +125,10 @@ set smartindent
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
+" Syntastic color highlighting changes
+hi SpellBad ctermfg=015 ctermbg=125 guifg=#5f87ff guibg=#ffffff
+hi SpellCap ctermfg=015 ctermbg=069 guifg=#af005f guibg=#ffffff
+
 " Enhanced keyboard mappings
 
 " in normal mode F2 will save the file
@@ -129,7 +136,11 @@ nmap <F2> :w<CR>
 " in insert mode F2 will exit insert, save, enters insert again
 imap <F2> <ESC>:w<CR>i
 " Configure make for compilingin gcc
-nnoremap <F4> :make!<cr>
+nnoremap <F3> :make!<cr>
+nnoremap <F4> :!make clean && make<cr>
+" Making refresh
+nnoremap <F5> :edit!<cr>
+
 
 " Set the ycm global config
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
@@ -142,6 +153,8 @@ imap <Tab> <C-N>
 " let g:ycm_auto_trigger = 0
 let g:ycm_key_list_select_completion = ['<C-j>']
 let g:ycm_key_list_previous_completion = ['<C-k>']
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_show_diagnostics_ui = 0
 
 " NerdTree mapping
 map <C-n> :NERDTreeToggle<CR>
@@ -155,7 +168,17 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" Used to give tmux some color in its status bar
+" Syntastic Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 " Settings for vim-airline
 let g:airline_powerline_fonts = 1
@@ -180,3 +203,10 @@ let g:lightline = {
       \ 'separator': { 'left': '⮀', 'right': '⮂' },
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
       \ }
+
+" Options for enchanced CPP highlighting
+let g:cpp_class_scope_highlight = 1
+
+" Base-16
+let base16colorspace=256
+
